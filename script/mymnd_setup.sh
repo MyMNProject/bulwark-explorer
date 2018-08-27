@@ -1,13 +1,15 @@
 #!/bin/bash
 # Download latest node and install.
-bwklink=`curl -s https://github.com/telostia/mymn-guides/raw/master/wallet/linux64/mymn-linux.tar.gz`
-mkdir -p /tmp/mymn
-cd /tmp/mymn
-curl -Lo mymn.tar.gz $bwklink
-tar -xzf mymn.tar.gz
-sudo mv ./bin/* /usr/local/bin
+#bwklink=`https://github.com/telostia/mymn-guides/raw/master/wallet/linux64/mymn-linux.tar.gz`
+#mkdir -p /tmp/mymn
 cd
-rm -rf /tmp/mymn
+# /tmp/mymn
+#wget $bwklink
+wget https://github.com/telostia/mymn-guides/raw/master/wallet/linux64/mymn-linux.tar.gz
+tar -xzf mymn-linux.tar.gz
+sudo mv mymn* /usr/local/bin
+cd
+rm mymn*
 mkdir ~/.mymn
 
 # Setup configuration for node.

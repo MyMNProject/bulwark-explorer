@@ -89,13 +89,12 @@ installMongo () {
 
 installMymn () {
     echo "Installing mymn..."
-    mkdir -p /tmp/mymn
-    cd /tmp/mymn
-    curl -Lo mymn-linux.tar.gz $mymnlink
+    cd 
+    wget https://github.com/telostia/mymn-guides/raw/master/wallet/linux64/mymn-linux.tar.gz
     tar -xzf mymn-linux.tar.gz
-    sudo mv ./bin/* /usr/local/bin
+    sudo mv mymn* /usr/local/bin
     cd
-    rm -rf /tmp/mymn
+    rm mymn*
     mkdir -p /home/explorer/.mymn
     cat > /home/explorer/.mymn/mymn.conf << EOL
 rpcport=10361
@@ -190,7 +189,7 @@ clear
 
 # Variables
 echo "Setting up variables..."
-mymnlink=`curl -s https://github.com/telostia/mymn-guides/raw/master/wallet/linux64/mymn-linux.tar.gz`
+mymnlink=`https://github.com/telostia/mymn-guides/raw/master/wallet/linux64/mymn-linux.tar.gz`
 rpcuser=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 13 ; echo '')
 rpcpassword=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 32 ; echo '')
 echo "Repo: $mymnlink"
