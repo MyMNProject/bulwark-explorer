@@ -87,39 +87,39 @@ installMongo () {
     clear
 }
 
-installBulwark () {
-    echo "Installing Bulwark..."
-    mkdir -p /tmp/bulwark
-    cd /tmp/bulwark
-    curl -Lo bulwark.tar.gz $bwklink
-    tar -xzf bulwark.tar.gz
+installMymn () {
+    echo "Installing mymn..."
+    mkdir -p /tmp/mymn
+    cd /tmp/mymn
+    curl -Lo mymn-linux.tar.gz $mymnlink
+    tar -xzf mymn-linux.tar.gz
     sudo mv ./bin/* /usr/local/bin
     cd
-    rm -rf /tmp/bulwark
-    mkdir -p /home/explorer/.bulwark
-    cat > /home/explorer/.bulwark/bulwark.conf << EOL
-rpcport=52544
+    rm -rf /tmp/mymn
+    mkdir -p /home/explorer/.mymn
+    cat > /home/explorer/.mymn/mymn.conf << EOL
+rpcport=10361
 rpcuser=$rpcuser
 rpcpassword=$rpcpassword
 daemon=1
 txindex=1
 EOL
-    sudo cat > /etc/systemd/system/bulwarkd.service << EOL
+    sudo cat > /etc/systemd/system/mymnd.service << EOL
 [Unit]
-Description=bulwarkd
+Description=mymnd
 After=network.target
 [Service]
 Type=forking
 User=explorer
 WorkingDirectory=/home/explorer
-ExecStart=/home/explorer/bin/bulwarkd -datadir=/home/explorer/.bulwark
-ExecStop=/home/explorer/bin/bulwark-cli -datadir=/home/explorer/.bulwark stop
+ExecStart=/home/explorer/bin/mymnd -datadir=/home/explorer/.mymn
+ExecStop=/home/explorer/bin/mymn-cli -datadir=/home/explorer/.mymn stop
 Restart=on-abort
 [Install]
 WantedBy=multi-user.target
 EOL
-    sudo systemctl start bulwarkd
-    sudo systemctl enable bulwarkd
+    sudo systemctl start mymnd
+    sudo systemctl enable mymnd
     echo "Sleeping for 1 hour while node syncs blockchain..."
     sleep 1h
     clear
@@ -127,20 +127,20 @@ EOL
 
 installBlockEx () {
     echo "Installing BlockEx..."
-    git clone https://github.com/bulwark-crypto/bulwark-explorer.git /home/explorer/blockex
+    git clone https://github.com/MyMNProject/mymn-exp.git /home/explorer/blockex
     cd /home/explorer/blockex
     yarn install
     cat > /home/explorer/blockex/config.js << EOL
 const config = {
   'api': {
-    'host': 'https://explorer.bulwarkcrypto.com',
+    'host': 'http://explorer.mymn.cf',
     'port': '3000',
     'prefix': '/api',
     'timeout': '180s'
   },
   'coinMarketCap': {
     'api': 'http://api.coinmarketcap.com/v1/ticker/',
-    'ticker': 'bulwark'
+    'ticker': 'mymn'
   },
   'db': {
     'host': '127.0.0.1',
@@ -154,7 +154,7 @@ const config = {
   },
   'rpc': {
     'host': '127.0.0.1',
-    'port': '52544',
+    'port': '10261',
     'user': '$rpcuser',
     'pass': '$rpcpassword',
     'timeout': 12000, // 12 seconds
@@ -190,10 +190,10 @@ clear
 
 # Variables
 echo "Setting up variables..."
-bwklink=`curl -s https://api.github.com/repos/bulwark-crypto/bulwark/releases/latest | grep browser_download_url | grep linux64 | cut -d '"' -f 4`
+mymnlink=`curl -s https://github.com/telostia/mymn-guides/raw/master/wallet/linux64/mymn-linux.tar.gz`
 rpcuser=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 13 ; echo '')
 rpcpassword=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 32 ; echo '')
-echo "Repo: $bwklink"
+echo "Repo: $mymnlink"
 echo "PWD: $PWD"
 echo "User: $rpcuser"
 echo "Pass: $rpcpassword"
@@ -205,7 +205,7 @@ if [ ! -d "/home/explorer/blockex" ]
 then
     installNginx
     installMongo
-    installBulwark
+    installMymn
     installNodeAndYarn
     installBlockEx
     echo "Finished installation!"

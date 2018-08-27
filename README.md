@@ -1,9 +1,6 @@
-![Bulwark Logo](https://bulwarkcrypto.com/wp-content/uploads/2018/04/blockexplorer.svg)
+![MyMN Logo](http://mymn.cf/sites/default/files/logo_ms.png)
 
-Bulwark Explorer
-&middot;
-[![GitHub license](https://img.shields.io/github/license/bulwark-crypto/bulwark-explorer.svg)](https://github.com/bulwark-crypto/bulwark-explorer/blob/master/COPYING) [![Build Status](https://travis-ci.org/bulwark-crypto/bulwark-explorer.svg?branch=master)](https://travis-ci.org/bulwark-crypto/bulwark-explorer) [![Discord](https://img.shields.io/discord/374271866308919296.svg)](https://discord.me/bulwarkcrypto) [![GitHub version](https://badge.fury.io/gh/bulwark-crypto%2Fbulwark-explorer.svg)](https://badge.fury.io/gh/bulwark-crypto%2Fbulwark-explorer)
-=====
+MyMN Explorer
 
 Simple cryptocurrency block explorer system.
 
@@ -18,16 +15,16 @@ https://nodejs.org/en/download/package-manager/
 
 https://yarnpkg.com/lang/en/docs/install/
 
-It is also required to have the Bulwark daemon running in the background. It is recommended to set this up before beginning to set up the explorer so that it syncs by the time you need it.
+It is also required to have the MyMN daemon running in the background. It is recommended to set this up before beginning to set up the explorer so that it syncs by the time you need it.
 
-Our geniuses here at BulwarkCorp™ have put together a script to do this for you. Just run
+Our geniuses here at MyMNCorp™ have put together a script to do this for you. Just run
 
-`bash script/bulwarkd_setup.sh`
+`bash script/MyMNd_setup.sh`
 
-This will install the latest Bulwark wallet and create a rpc username/password before starting the daemon.
+This will install the latest MyMN wallet and create a rpc username/password before starting the daemon.
 
 ## Install
-`git clone https://github.com/bulwark-crypto/bulwark-explorer.git` - copy repo to local folder.
+`git clone https://github.com/MyMNProject/mymn-exp.git blockex` - copy repo to local folder.
 
 `cd blockex` - change into project directory.
 
@@ -63,11 +60,11 @@ __Note:__ is is recommended to run all the crons before editing the crontab to h
 
 To setup the crontab please see run `crontab -e` to edit the crontab and paste the following lines (edit with your local information):
 ```
-*/1 * * * * cd /path/to/blockex && ./script/cron_block.sh >> ./tmp/block.log 2>&1
-*/1 * * * * cd /path/to/blockex && /path/to/node ./cron/masternode.js >> ./tmp/masternode.log 2>&1
-*/1 * * * * cd /path/to/blockex && /path/to/node ./cron/peer.js >> ./tmp/peer.log 2>&1
-*/1 * * * * cd /path/to/blockex && /path/to/node ./cron/rich.js >> ./tmp/rich.log 2>&1
-*/5 * * * * cd /path/to/blockex && /path/to/node ./cron/coin.js >> ./tmp/coin.log 2>&1
+*/1 * * * * cd /root/blockex && ./script/cron_block.sh >> ./tmp/block.log 2>&1
+*/1 * * * * cd /root/blockex && /root/node ./cron/masternode.js >> ./tmp/masternode.log 2>&1
+*/1 * * * * cd /root/blockex && /root/node ./cron/peer.js >> ./tmp/peer.log 2>&1
+*/1 * * * * cd /root/blockex && /root/node ./cron/rich.js >> ./tmp/rich.log 2>&1
+*/5 * * * * cd /root/blockex && /root/node ./cron/coin.js >> ./tmp/coin.log 2>&1
 ```
 
 ## Build
